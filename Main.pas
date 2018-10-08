@@ -6,12 +6,13 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIRegClasses, uniGUIForm, uniButton, uniBitBtn,
-  uniGUIBaseClasses, uniEdit;
+  uniGUIBaseClasses, uniEdit, uniMemo;
 
 type
  TMainForm = class(TUniForm)
 UniEdit4: TUniEdit;
 btnSend: TUniBitBtn;
+    UniMemo1: TUniMemo;
 procedure btnSendClick(Sender: TObject);
 procedure UniFormAjaxEvent(Sender: TComponent; EventName: string; Params:
     TUniStrings);
@@ -37,15 +38,18 @@ end;
 
 procedure TMainForm.btnSendClick(Sender: TObject);
 begin
- if not WebMode then
-    Sleep(5000);
+  Sleep(5000);
 end;
 
 procedure TMainForm.UniFormAjaxEvent(Sender: TComponent; EventName: string;
     Params: TUniStrings);
 begin
- if EventName='sendEvent' then
-   Sleep(5000);
+  //Custom event in the original example that delegates to btnSendClick.
+  //We don't use this anymore. Instead we directly call
+  //MainForm.btnSend.click() in JS.
+  //The handler has been kept for reference.
+  if EventName='sendEvent' then
+    btnSendClick(btnSend);
 end;
 
 initialization
